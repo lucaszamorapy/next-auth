@@ -14,8 +14,16 @@ datasource db {
 }
 
 model Users {
-  id    Int    @id @default(autoincrement())
-  email String @unique
-  name  String?
-  password String 
+  id       String @id @default(uuid())
+  email    String @unique
+  name     String?
+  password String
 }
+
+model Product {
+  id          String @id @default(uuid())
+  name        String
+  description String
+  price        Float
+}
+

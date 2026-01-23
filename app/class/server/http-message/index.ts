@@ -28,7 +28,37 @@ const returnType: IReturnTypes[] = [
   { status: StatusType.serverError, message: "Erro interno do servidor.", code: 500 }
 ]
 
-export class HttpMessageReturn<T> {
+
+
+export class HttpError extends Error {
+  payload: HttpMessageReturn;
+
+  constructor(payload: HttpMessageReturn) {
+    super(payload.message);
+    this.payload = payload;
+  }
+
+  static badRequest(message?: string) {
+    return new HttpError(
+      new HttpMessageReturn("badRequest", message ?? "", null)
+    );
+  }
+
+  static notFound(message?: string) {
+    return new HttpError(
+      new HttpMessageReturn("notFound", message ?? "", null)
+    );
+  }
+
+  static serverError(message?: string) {
+    return new HttpError(
+      new HttpMessageReturn("serverError", message ?? "")
+    );
+  }
+
+}
+
+export class HttpMessageReturn<T = unknown> {
   code: number;
   message?: string;
   data?: T | null;

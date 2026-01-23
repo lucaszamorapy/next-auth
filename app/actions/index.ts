@@ -2,6 +2,7 @@
 import { AuthError } from "next-auth";
 import { signIn, signOut } from "../auth"
 import { IUser } from "../data/user";
+import { IApiReturn } from "../types";
 
 export const doSocialLogin = async (social: "github" | "google") => {
   await signIn(social, { redirectTo: "/" });
@@ -11,7 +12,7 @@ export const doLogout = async () => {
   await signOut({ redirectTo: "/login" })
 }
 
-export const doCredentialsLogin = async (data: IUser) => {
+export const doCredentialsLogin = async (data: IUser): Promise<IApiReturn> => {
   try {
     await signIn("credentials", {
       email: data.email,
@@ -31,7 +32,7 @@ export const doCredentialsLogin = async (data: IUser) => {
     }
 
     return {
-      success: 500,
+      code: 500,
       message: "Erro interno ao realizar login",
     };
     //login-form.tsx:63 Only plain objects, and a few built-ins, can be passed to Client Components from Server Components. Classes or null prototypes are not supported. {}

@@ -22,7 +22,8 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import Link from "next/link";
 import { RegisterFormData, registerSchema } from "../validators";
-import { configuration } from "@/appsettings";
+import { apiFetch } from "@/lib/api";
+import { HttpErrorClient } from "@/app/class/client/http-message";
 
 export function RegisterForm({
   className,
@@ -40,25 +41,19 @@ export function RegisterForm({
   });
   const onSubmit = async (data: RegisterFormData) => {
     try {
-      const response = await fetch(`${configuration.API_URL}/register`, {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
+      const res = await apiFetch("register", "POST", {
         body: JSON.stringify(data),
       });
-      const res = await response.json();
-      if (res.code !== 201) {
-        toast.error(res.message);
-        console.error(res.message);
-      } else {
-        router.push("/login");
-      }
+      router.push("/login");
+      toast.success(res.message);
     } catch (error) {
-      if (error instanceof Error) {
+      if (error instanceof HttpErrorClient) {
         toast.error(error.message);
-        console.error(error.message);
+        console.error(error.payload);
+        return;
       }
+      toast.error("Erro inesperado");
+      console.error(error);
     }
   };
   return (
