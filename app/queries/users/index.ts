@@ -47,3 +47,23 @@ export const createUser = async (
     throw HttpError.serverError();
   }
 };
+
+export const getUserByEmail = async (email: string) => {
+  try {
+    const user = await prisma.users.findUnique({ where: { email }, omit: { password: true } })
+    if (!user) {
+      throw HttpError.notFound()
+    }
+    return new HttpMessageReturn("success", "", user)
+  } catch (error: unknown) {
+    if (error instanceof HttpError) {
+      throw error;
+    }
+
+    if (error instanceof Error) {
+      throw HttpError.serverError(error.message);
+    }
+
+    throw HttpError.serverError();
+  }
+}

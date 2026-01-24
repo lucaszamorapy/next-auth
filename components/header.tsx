@@ -6,6 +6,7 @@ import LogoutForm from "./logout-form";
 
 export const Header = async () => {
   const session = await auth();
+  console.log(session);
   return (
     <header className="w-full border-b border-border bg-background">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
@@ -40,7 +41,10 @@ export const Header = async () => {
           {session && session.user && (
             <div className="flex items-center gap-5">
               <Avatar className="h-10 w-10">
-                <AvatarImage src={session.user.image ?? undefined} />
+                <AvatarImage
+                  referrerPolicy="no-referrer"
+                  src={session.user.image ?? undefined}
+                />
                 <AvatarFallback>
                   {session.user.name
                     ?.split(" ")

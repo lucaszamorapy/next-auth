@@ -5,11 +5,10 @@ import Credentials from "next-auth/providers/credentials";
 import { formSchema } from "./(auth)/login/validators";
 import bcrypt from "bcrypt"
 import { prisma } from "@/lib/prisma";
+import { authConfig } from "./auth.config";
 
 export const { handlers: { GET, POST }, auth, signIn, signOut } = NextAuth({
-  session: {
-    strategy: "jwt"
-  },
+  ...authConfig,
   providers: [
     Google({
       //clientId: process.env.GOOGLE_CLIENT_ID,
