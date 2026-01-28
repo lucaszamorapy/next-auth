@@ -6,7 +6,6 @@ import LogoutForm from "./logout-form";
 
 export const Header = async () => {
   const session = await auth();
-  console.log(session);
   return (
     <header className="w-full border-b border-border bg-background">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
@@ -37,6 +36,12 @@ export const Header = async () => {
             className="text-sm font-medium text-muted-foreground hover:text-foreground transition"
           >
             Contato
+          </Link>
+          <Link
+            href="/users"
+            className="text-sm font-medium text-muted-foreground hover:text-foreground transition"
+          >
+            Usuários
           </Link>
           {session && session.user && (
             <div className="flex items-center gap-5">

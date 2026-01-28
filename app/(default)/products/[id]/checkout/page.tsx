@@ -10,7 +10,9 @@ const CheckoutPage = async ({ params }: IRouteParams) => {
   const { id } = await params;
   let product: Product = {} as Product;
   try {
-    const res = await apiFetch(`/products/${id}`, "GET", { cache: "no-store" });
+    const res = await apiFetch(`/products/${id}`, false, "GET", {
+      cache: "no-store",
+    });
     product = res.data;
   } catch (error) {
     console.error(error);

@@ -13,7 +13,9 @@ import Link from "next/link";
 const ProductPage = async () => {
   let products: Product[] = [];
   try {
-    const res = await apiFetch(`/products`, "GET", { cache: "no-store" });
+    const res = await apiFetch(`/products`, false, "GET", {
+      cache: "no-store",
+    });
     products = res.data;
   } catch (error) {
     console.error(error);
@@ -28,7 +30,7 @@ const ProductPage = async () => {
         </div>
       </div>
 
-      {products.length === 0 ? (
+      {products && products.length === 0 ? (
         <p className="text-muted-foreground">Nenhum produto encontrado.</p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

@@ -1,14 +1,9 @@
 
-import { auth } from "@/app/auth";
 import { HttpError, HttpMessageReturn } from "@/app/class/server/http-message";
 import { getAllProducts } from "@/app/queries/products";
 import { NextResponse } from "next/server";
 
 export const GET = async (): Promise<NextResponse> => {
-  const session = await auth();
-  if (!session?.user) {
-    return NextResponse.json(new HttpMessageReturn("unauthorized", "", null))
-  }
   try {
     const res = await getAllProducts()
     return NextResponse.json(res, { status: res.code })

@@ -16,7 +16,9 @@ import Link from "next/link";
 const ProductPage = async ({ params }: IRouteParams) => {
   const { id } = await params;
   let product: Product = {} as Product;
-  const res = await apiFetch(`/products/${id}`, "GET", { cache: "no-store" });
+  const res = await apiFetch(`/products/${id}`, false, "GET", {
+    cache: "no-store",
+  });
   product = res.data;
   return (
     <div className="p-6 max-w-4xl mx-auto space-y-6">

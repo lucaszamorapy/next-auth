@@ -41,7 +41,7 @@ export function RegisterForm({
   });
   const onSubmit = async (data: RegisterFormData) => {
     try {
-      const res = await apiFetch("register", "POST", {
+      const res = await apiFetch("register", false, "POST", {
         body: JSON.stringify(data),
       });
       router.push("/login");

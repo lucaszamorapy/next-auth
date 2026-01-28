@@ -8,3 +8,10 @@ export interface IApiReturn {
   message: string;
   data?: any;
 }
+
+export interface IAccessTokenPayload {
+  exp: number;
+  sub?: string;
+  iat?: number;
+}
+
